@@ -13,7 +13,7 @@ const key = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'B
 let area = document.querySelector('textarea');
 let keyboard = document.querySelector('.keyboard');
 
-let text = document.querySelector('textarea');
+// let text = document.querySelector('textarea');
 let keys = document.querySelectorAll('.key');
 
 
@@ -84,15 +84,33 @@ document.onkeydown = function(event) {
 document.querySelectorAll('#keyboard .key').forEach(function(element) {
     element.onclick = function(event) {
         area.focus();
-        // area.value = area.value + event.target.innerHTML;
+        // area.value = event.target.innerHTML;
+        
 
         let back = getCaretPos(area); //записывает текущую позицию коретки
-
         let tmp = area.value.split('');
+
+        
         tmp.splice(back, 0, event.target.innerHTML);
         area.value = tmp.join('');
         setSelectionRange(area, back + 1, back + 1);
 
+        // console.dir(event);
+
+        if(event.target.innerHTML === 'Backspace') {
+    
+        
+        // back = getCaretPos(area);
+        // let tmp = area.value.split('');
+        // area.value = key.splice(14, '');        
+
+        tmp.splice(back - 1, 1);
+        area.value = tmp.join('');
+        setSelectionRange(area, back - 1, back - 1);
+
+        };
+
+        // console.dir(event.target.dataset.key === 'Backspace');
 
         
         setTimeout(function () {           
@@ -100,11 +118,9 @@ document.querySelectorAll('#keyboard .key').forEach(function(element) {
             element.classList.remove('active');
         });
     }, 100); 
+
         let code = this.getAttribute('data');
         this.classList.add('active');
-        
-        console.dir(area);
-        // console.log();
     }
     
 });
@@ -112,12 +128,19 @@ document.querySelectorAll('#keyboard .key').forEach(function(element) {
 
 // console.log(area.value = key[22]);
 
-keys.forEach(function(element) {
-    element.addEventListener('mousedown', (event) => {
-        area.value = area.value + event.target.innerHTML;
-        console.log(event.target);
-    });
-});
+
+    // document.addEventListener('mousedown', (event) => {
+    //     // area.value = area.value + event.target.innerHTML;
+    //     // console.log(event.target);
+    //     if(event.target.innerHTML == 'Backspace'){
+    //         console.log("hello")
+    //     }
+    // });
+
+
+
+
+
 
 // keys.forEach(e => {
 //     e.addEventListener('mousedown', (event) => {
