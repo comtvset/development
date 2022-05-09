@@ -12,8 +12,6 @@ const key = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'B
 
 let area = document.querySelector('textarea');
 let keyboard = document.querySelector('.keyboard');
-
-// let text = document.querySelector('textarea');
 let keys = document.querySelectorAll('.key');
 
 
@@ -40,7 +38,6 @@ document.querySelector('.key[data="Delete"]').style.width = 100 + 'px';
 document.querySelector('.key[data="CapsLock"]').style.width = 80 + 'px';
 document.querySelector('.key[data="Enter"]').style.width = 90 + 'px';
 document.querySelector('.key[data="ShiftLeft"]').style.width = 120 + 'px';
-// document.querySelector('.key[data="ShiftRight"]').style.width = 85 + 'px';
 
 function getCaretPos(obj) {
     obj.focus();
@@ -97,8 +94,7 @@ document.querySelectorAll('#keyboard .key').forEach(function(element) {
 
         // console.dir(event);
 
-        if(event.target.innerHTML === 'Backspace') {
-    
+        if(event.target.innerHTML === 'Backspace') {    
         
         // back = getCaretPos(area);
         // let tmp = area.value.split('');
@@ -109,8 +105,6 @@ document.querySelectorAll('#keyboard .key').forEach(function(element) {
         setSelectionRange(area, back - 1, back - 1);
 
         };
-
-        // console.dir(event.target.dataset.key === 'Backspace');
 
         
         setTimeout(function () {           
