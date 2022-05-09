@@ -1,0 +1,60 @@
+.container {
+  width: 1024px;
+  margin: 0 auto;
+}
+
+html {
+  background: #222222;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  color: azure;
+}
+
+.keyboard {
+  display: block;
+  padding: 5px;
+  width: 1500px;
+}
+
+.keyboard::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.key {
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border: 1px solid gray;
+  margin: 3px;
+  padding: 3px;
+  float: left;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 260%;
+  background: gray;
+}
+
+.clear {
+  clear: both;
+}
+
+.active {
+  -webkit-box-shadow: inset 0px 0px 22px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px 0px 22px 1px rgba(0, 0, 0, 0.2);
+}
+
+.window {
+  width: 974px;
+  height: 200px;
+}
+
+textarea {
+  resize: none;
+}
+/*# sourceMappingURL=style.css.map */
