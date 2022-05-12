@@ -15,8 +15,6 @@ let keyboard = document.querySelector('.keyboard');
 let keys = document.querySelectorAll('.key');
 
 
-
-
 function init(){
     let out = '';
     for (let i = 0; i < code.length; i++) {
@@ -32,12 +30,28 @@ function init(){
 init();
 
 document.querySelector('.key[data="Space"]').style.width = 440 + 'px';
-document.querySelector('.key[data="Backspace"]').style.width = 120 + 'px';
+document.querySelector('.key[data="Backspace"]').style.width = 130 + 'px';
 document.querySelector('.key[data="Tab"]').style.width = 70 + 'px';
-document.querySelector('.key[data="Delete"]').style.width = 100 + 'px';
+document.querySelector('.key[data="Delete"]').style.width = 110 + 'px';
 document.querySelector('.key[data="CapsLock"]').style.width = 80 + 'px';
-document.querySelector('.key[data="Enter"]').style.width = 90 + 'px';
-document.querySelector('.key[data="ShiftLeft"]').style.width = 120 + 'px';
+document.querySelector('.key[data="Enter"]').style.width = 100 + 'px';
+document.querySelector('.key[data="ShiftLeft"]').style.width = 130 + 'px';
+
+document.querySelector('.key[data="ShiftLeft"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="Backquote"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="Tab"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="CapsLock"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="ControlLeft"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="MetaLeft"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="AltLeft"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="Backspace"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="Delete"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="Enter"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="ShiftRight"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="ArrowUp"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="ArrowDown"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="ArrowLeft"]').style.backgroundColor = "#404040";
+document.querySelector('.key[data="ArrowRight"]').style.backgroundColor = "#404040";
 
 function getCaretPos(obj) {
     obj.focus();
@@ -77,35 +91,74 @@ document.onkeydown = function(event) {
     document.querySelector('#keyboard .key[data="' + event.code + '"]').classList.add('active');
     
 }
-
 document.querySelectorAll('#keyboard .key').forEach(function(element) {
     element.onclick = function(event) {
         area.focus();
-        // area.value = event.target.innerHTML;
         
 
-        let back = getCaretPos(area); //записывает текущую позицию коретки
+        let back = getCaretPos(area);
         let tmp = area.value.split('');
 
         
         tmp.splice(back, 0, event.target.innerHTML);
         area.value = tmp.join('');
         setSelectionRange(area, back + 1, back + 1);
-
-        // console.dir(event);
-
-        if(event.target.innerHTML === 'Backspace') {    
         
-        // back = getCaretPos(area);
-        // let tmp = area.value.split('');
-        // area.value = key.splice(14, '');        
-
-        tmp.splice(back - 1, 1);
-        area.value = tmp.join('');
-        setSelectionRange(area, back - 1, back - 1);
-
+        if(event.target.innerHTML === 'Backspace') {   
+            tmp.splice(back - 1, 1);
+            tmp.splice(back - 1, 1);
+            area.value = tmp.join('');
         };
 
+        if(event.target.innerHTML === 'Enter') {            
+            tmp.splice(back - 0, 1);        
+            area.value = tmp.join('');
+            document.getElementById('area').value = area.value +'\r\n'+'';        
+        };
+
+        if(event.target.innerHTML === 'Delete') {     
+            tmp.splice(back - 0, 1);
+            tmp.splice(back - 0, 1);
+            area.value = tmp.join('');
+        };
+
+        if(event.target.innerHTML === 'Tab') {     
+            tmp.splice(back - 0, 1);
+            area.value = tmp.join('');
+        };
+
+        if(event.target.innerHTML === 'Shift') {     
+            tmp.splice(back - 0, 1);
+            area.value = tmp.join('');
+        };
+       
+        if(event.target.innerHTML === 'Ctrl') {     
+            tmp.splice(back - 0, 1);
+            area.value = tmp.join('');
+        };
+
+        if(event.target.innerHTML === 'Alt') {     
+            tmp.splice(back - 0, 1);
+            area.value = tmp.join('');
+        };
+
+        if(event.target.innerHTML === 'Win') {     
+            tmp.splice(back - 0, 1);
+            area.value = tmp.join('');
+        };
+        
+        if(event.target.innerHTML === 'CapsLock') {     
+            tmp.splice(back - 0, 1);
+            area.value = tmp.join('');
+
+            EventTarget.addEventListener('click', toUpperCase())
+
+            // document.getElementById('area').value = area.value.toUpperCase();
+            
+            console.dir(event)
+            alert(event.shiftKey)
+        };
+        
         
         setTimeout(function () {           
         document.querySelectorAll('#keyboard .key').forEach(function(element) {
@@ -113,8 +166,6 @@ document.querySelectorAll('#keyboard .key').forEach(function(element) {
         });
     }, 100); 
 
-        let code = this.getAttribute('data');
-        this.classList.add('active');
     }
     
 });
@@ -124,10 +175,26 @@ document.querySelectorAll('#keyboard .key').forEach(function(element) {
 
 
     // document.addEventListener('mousedown', (event) => {
-    //     // area.value = area.value + event.target.innerHTML;
+        
     //     // console.log(event.target);
-    //     if(event.target.innerHTML == 'Backspace'){
-    //         console.log("hello")
+    //     if(event.target.innerHTML == 'Delete'){
+    //         // document.querySelector('.key[data="Delete"]').value = "...";
+    //         // console.log("hello");
+    //         // console.dir(area.value);
+    //         document.querySelector('.key[data="Delete"]').innerHTML = '';
+    //         console.dir(event)
+    //     }
+    // });
+
+    // document.addEventListener('mouseup', (event) => {
+        
+    //     // console.log(event.target);
+    //     if(event.target.innerHTML == ''){
+    //         // document.querySelector('.key[data="Delete"]').value = "...";
+    //         // console.log("hello");
+    //         // console.dir(area.value);
+    //         document.querySelector('.key[data="Delete"]').innerHTML = 'Delete';
+    //         console.dir(event)
     //     }
     // });
 
@@ -147,28 +214,19 @@ document.querySelectorAll('#keyboard .key').forEach(function(element) {
 
 
 // document.querySelector('.window').onkeydown = function (event) {
-//     console.log('keydown');
-//     console.log('charCode: ' +event.charCode);
+//     console.log('code: ' +event.code);
+//     console.log('key: ' +event.key);
+//     console.dir(event)
+// }
+// document.querySelector('.window').onkeyup = function (event) {
 //     console.log('code: ' +event.code);
 //     console.log('key: ' +event.key);
 // }
 
-
-// area.focus();
-// let active = document.activeElement;
-// console.log(active);
-
-// area.onfocus = function(event){
-//     console.log("получаем фокус")
-// }
-
-// area.onblur = function(event){
-//     console.log("теряем фокус")
-// }
 
 // else if (event.target.dataset.key === 'Backspace') {
 //     back = getCaretPos(text);
 //     let tmp = text.value.split('');
 //     tmp.splice(back - 1, 1);
 //     text.value = tmp.join('');
-//     setSelectionRange(text, back - 1, back - 1);
+//     setSelectionRange(text, back - 1, back - 1)
