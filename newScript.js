@@ -151,8 +151,6 @@ document.querySelectorAll('#keyboard .key').forEach(function(element) {
             tmp.splice(back - 0, 1);
             area.value = tmp.join('');
 
-            EventTarget.addEventListener('click', toUpperCase())
-
             // document.getElementById('area').value = area.value.toUpperCase();
             
             console.dir(event)
