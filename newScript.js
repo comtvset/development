@@ -30,8 +30,33 @@ const key2Ru = [
   'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', 'ᐃ', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', 'ᐊ', 'ᐁ', 'ᐅ',
 ];
 
-// const area = document.querySelector('textarea');
-// const keyboard = document.querySelector('.keyboard');
+const container = document.createElement('div');
+container.classList.add('container');
+
+const textareaContainer = document.createElement('div');
+
+const header = document.createElement('h1');
+header.textContent = 'keyboard';
+
+const textarea = document.createElement('textarea');
+textarea.setAttribute('name', 'text');
+textarea.setAttribute('id', 'area');
+textarea.classList.add('window');
+
+textareaContainer.appendChild(header);
+textareaContainer.appendChild(textarea);
+
+const keyboardContainer = document.createElement('div');
+keyboardContainer.classList.add('keyboard');
+keyboardContainer.setAttribute('id', 'keyboard');
+
+container.appendChild(textareaContainer);
+container.appendChild(keyboardContainer);
+
+document.body.appendChild(container);
+
+
+
 
 function init(e) {
   let out = '';
@@ -39,11 +64,27 @@ function init(e) {
     if (i == 14 || i == 28 || i == 42 || i == 56) {
       out = out + '<div class="clear"></div>';
     }
-    out = out + '<div class="key" data-value="' + code[i] + '">' + e[i] + '</div>';
+    if(code[i] === 'CapsLock') {
+        console.log('CapsLock')
+        out = out + '<div class="key" id="myCapsLockId"'+'data-value="' + code[i] + '">' + e[i] + '</div>';
+    } else {
+    out = out + '<div class="key" data-value="' + code[i] + '">' + e[i] + '</div>';}
   }
   document.querySelector('#keyboard').innerHTML = out;
+
 }
-init(key);
+
+init(key)
+
+
+let capsLock = document.getElementById('myCapsLockId')
+capsLock.addEventListener('click', function (event) {
+    capsLock.classList.toggle('active');
+    console.log('HELLO FROM CAPSLOCK')
+    init(key2)
+    setKeyWidths(keyWidths);
+    setKeysToChange(keysToChange);
+})
 
 const keyWidths = {
   Space: 440,
@@ -54,10 +95,6 @@ const keyWidths = {
   Enter: 100,
   ShiftLeft: 130,
 };
-
-// for (const key in keyWidths) {
-//   document.querySelector(`.key[data-value="${key}"]`).style.width = `${keyWidths[key]}px`;
-// }
 
 function setKeyWidths(keyWidths) {
     for (const key in keyWidths) {
@@ -97,16 +134,15 @@ setKeysToChange(keysToChange);
 
 const target = document.querySelector('body');
 
-// target.addEventListener('click', function(event) {
+target.addEventListener('click', function(event) {
 
-//     // const clickedElement = event.target;
-//     // const dataValue = clickedElement.dataset.value;
-//     // console.log('Значение атрибута data элемента: ' + dataValue);
+    const clickedElement = event.target;
+    const dataValue = clickedElement.dataset.value;
+    console.log('Значение атрибута data элемента: ' + dataValue);
 
-//     console.dir(event.target);
-//     console.log(event.target);
-// });
-
+    console.dir(event.target);
+    console.log(event.target);
+});
 
 
 const myTextarea = document.getElementById('area');
@@ -119,13 +155,14 @@ myTextarea.addEventListener('blur', function () {
   myTextarea.focus();
 });
 
+
 myElement.forEach(function (element) {
   element.addEventListener('click', function (event) {
+
     const clickedElement = event.target;
     const dataValue = clickedElement.dataset.value;
     elementCount = countElements();
     myTextarea.focus();
-
     let found = false;
 
     keysToChange.forEach((key, index) => {
@@ -152,19 +189,10 @@ myElement.forEach(function (element) {
     if (dataValue === 'Space') {
         space();
     }
-    if (dataValue === 'CapsLock') {
-        // const capslockBtn = clickedElement;
-        // capslockBtn.setAttribute('id', 'capslock');
-        capslock()
-    }
   });
 });
 
-function capslock() {
-        init(key2);
-        setKeysToChange(keysToChange);
-        setKeyWidths(keyWidths);
-}
+
 
 
 function countElements() {
@@ -206,6 +234,8 @@ function space() {
     myTextarea.value = myTextarea.value.substring(0, currentPosition) + ' ' + myTextarea.value.substring(currentPosition);
     myTextarea.setSelectionRange(currentPosition + 1, currentPosition + 1);
 }
+
+
 
 
 
