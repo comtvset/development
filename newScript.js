@@ -76,14 +76,14 @@ function init(e) {
 
 init(key)
 
-
 let capsLock = document.getElementById('myCapsLockId')
 capsLock.addEventListener('click', function (event) {
-    capsLock.classList.toggle('active');
-    console.log('HELLO FROM CAPSLOCK')
+    // capsLock.classList.toggle('active');
+    // console.log('HELLO FROM CAPSLOCK')
     init(key2)
     setKeyWidths(keyWidths);
     setKeysToChange(keysToChange);
+    run();
 })
 
 const keyWidths = {
@@ -132,21 +132,21 @@ function setKeysToChange(keysToChange) {
 }
 setKeysToChange(keysToChange);
 
-const target = document.querySelector('body');
+// const target = document.querySelector('body');
 
-target.addEventListener('click', function(event) {
+// target.addEventListener('click', function(event) {
 
-    const clickedElement = event.target;
-    const dataValue = clickedElement.dataset.value;
-    console.log('Значение атрибута data элемента: ' + dataValue);
+//     const clickedElement = event.target;
+//     const dataValue = clickedElement.dataset.value;
+//     console.log('Значение атрибута data элемента: ' + dataValue);
 
-    console.dir(event.target);
-    console.log(event.target);
-});
+//     console.dir(event.target);
+//     console.log(event.target);
+// });
 
 
 const myTextarea = document.getElementById('area');
-const myElement = document.querySelectorAll('.key');
+// const myElement = document.querySelectorAll('.key');
 let elementCount = 0;
 let currentPosition = 0;
 
@@ -155,6 +155,8 @@ myTextarea.addEventListener('blur', function () {
   myTextarea.focus();
 });
 
+function run() {
+    const myElement = document.querySelectorAll('.key');
 
 myElement.forEach(function (element) {
   element.addEventListener('click', function (event) {
@@ -192,7 +194,8 @@ myElement.forEach(function (element) {
   });
 });
 
-
+}
+run()
 
 
 function countElements() {
