@@ -12,6 +12,12 @@ const key = [
   'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'ᐃ', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', 'ᐊ', 'ᐁ', 'ᐅ',
 ];
 
+const keyUp = [
+  '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O',
+  'P', '[', ']', 'Delete', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", '\\', 'Enter', 'Shift', '\\',
+  'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'ᐃ', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', 'ᐊ', 'ᐁ', 'ᐅ',
+];
+
 const key2 = [
   '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O',
   'P', '{', '}', 'Delete', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', "'", '|', 'Enter', 'Shift', '|', 'Z', 'X',
@@ -65,9 +71,18 @@ function init(e) {
       out = out + '<div class="clear"></div>';
     }
     if(code[i] === 'CapsLock') {
-        console.log('CapsLock')
+      console.log('CapsLock')
         out = out + '<div class="key" id="myCapsLockId"'+'data-value="' + code[i] + '">' + e[i] + '</div>';
-    } else {
+    }
+    else if (code[i] === 'ShiftLeft') {
+      console.log('Shift')
+      out = out + '<div class="key" id="myShiftLeft"'+'data-value="' + code[i] + '">' + e[i] + '</div>';
+    }
+    else if (code[i] === 'ShiftRight') {
+      console.log('Shift')
+      out = out + '<div class="key" id="myShiftRight"'+'data-value="' + code[i] + '">' + e[i] + '</div>';
+    }
+    else {
     out = out + '<div class="key" data-value="' + code[i] + '">' + e[i] + '</div>';}
   }
   document.querySelector('#keyboard').innerHTML = out;
@@ -75,16 +90,6 @@ function init(e) {
 }
 
 init(key)
-
-let capsLock = document.getElementById('myCapsLockId')
-capsLock.addEventListener('click', function (event) {
-    // capsLock.classList.toggle('active');
-    // console.log('HELLO FROM CAPSLOCK')
-    init(key2)
-    setKeyWidths(keyWidths);
-    setKeysToChange(keysToChange);
-    run();
-})
 
 const keyWidths = {
   Space: 440,
@@ -157,6 +162,8 @@ myTextarea.addEventListener('blur', function () {
 
 function run() {
     const myElement = document.querySelectorAll('.key');
+    runCapsLock();
+    runShift();
 
 myElement.forEach(function (element) {
   element.addEventListener('click', function (event) {
@@ -196,6 +203,76 @@ myElement.forEach(function (element) {
 
 }
 run()
+
+let isKey2Active = true;
+let isKey3Active = true;
+
+function runCapsLock() {
+
+  let capsLock = document.getElementById('myCapsLockId')
+    capsLock.addEventListener('click', function (event) {
+        capsLock.classList.toggle('active');
+        console.log('HELLO FROM CAPSLOCK')
+        if (isKey2Active) {
+          init(keyUp);
+        } else {
+          init(key);
+        }
+        setKeyWidths(keyWidths);
+        setKeysToChange(keysToChange);
+        run();
+
+        isKey2Active = !isKey2Active;
+    })
+}
+
+function runShift() {
+  let shiftLeft = document.getElementById('myShiftLeft');
+  let shiftRight = document.getElementById('myShiftRight');
+  let isKey3Active = false;
+
+  shiftRight.addEventListener('mousedown', function (event) {
+      console.log('HELLO FROM SHIFT')
+      if (isKey2Active) {
+        init(key2);
+      } else {
+        init(key);
+      }
+      setKeyWidths(keyWidths);
+      setKeysToChange(keysToChange);
+      run();
+      isKey3Active = !isKey3Active;
+    });
+
+    shiftRight.addEventListener('mouseup', function (event) {
+      init(isKey3Active ? key2 : key);
+      setKeyWidths(keyWidths);
+      setKeysToChange(keysToChange);
+      run();
+      isKey3Active = false;
+    });
+
+    shiftLeft.addEventListener('mousedown', function (event) {
+      console.log('HELLO FROM SHIFT')
+      if (isKey2Active) {
+        init(key2);
+      } else {
+        init(key);
+      }
+      setKeyWidths(keyWidths);
+      setKeysToChange(keysToChange);
+      run();
+      isKey3Active = !isKey3Active;
+    });
+
+    shiftLeft.addEventListener('mouseup', function (event) {
+      init(isKey3Active ? key2 : key);
+      setKeyWidths(keyWidths);
+      setKeysToChange(keysToChange);
+      run();
+      isKey3Active = false;
+    });
+}
 
 
 function countElements() {
@@ -237,428 +314,3 @@ function space() {
     myTextarea.value = myTextarea.value.substring(0, currentPosition) + ' ' + myTextarea.value.substring(currentPosition);
     myTextarea.setSelectionRange(currentPosition + 1, currentPosition + 1);
 }
-
-
-
-
-
-// function getCaretPos(obj) {
-//     obj.focus();
-//     if (obj.selectionStart) return obj.selectionStart;
-//     else if (document.selection) {
-//       var sel = document.selection.createRange();
-//       var clone = sel.duplicate();
-//       sel.collapse(true);
-//       clone.moveToElementText(obj);
-//       clone.setEndPoint('EndToEnd', sel);
-//       return clone.text.length;
-//     }
-//     return 0;
-//   }
-
-//   function setSelectionRange(input, selectionStart, selectionEnd) {
-//     if (input.setSelectionRange) {
-//       input.focus();
-//       input.setSelectionRange(selectionStart, selectionEnd);
-//     } else if (input.createTextRange) {
-//       var range = input.createTextRange();
-//       range.collapse(true);
-//       range.moveEnd('character', selectionEnd);
-//       range.moveStart('character', selectionStart);
-//       range.select();
-//     }
-//   }
-
-// document.onkeydown = function(event) {
-//     setTimeout(function () {
-
-//         area.focus();
-//         document.querySelectorAll('#keyboard .key').forEach(function(element) {
-//             element.classList.remove('active');
-//         });
-//     }, 100);
-
-//     document.querySelector('#keyboard .key[data="' + event.code + '"]').classList.add('active');
-// }
-
-// document.querySelectorAll('#keyboard .key').forEach(function(element) {
-//     element.onclick = function(event) {
-//         area.focus();
-
-//         let back = getCaretPos(area);
-//         let tmp = area.value.split('');
-
-//         tmp.splice(back, 0, event.target.innerHTML);
-//         area.value = tmp.join('');
-//         setSelectionRange(area, back + 1, back + 1);
-
-//         if(event.target.innerHTML === 'Backspace') {
-//             tmp.splice(back - 1, 1);
-//             tmp.splice(back - 1, 1);
-//             area.value = tmp.join('');
-//         };
-
-//         if(event.target.innerHTML === 'Enter') {
-//             tmp.splice(back - 0, 1)
-//             area.value = tmp.join('');
-//             document.getElementById('area').value = area.value +'\r\n'+'';
-//         };
-
-//         if(event.target.innerHTML === 'Delete') {
-//             tmp.splice(back - 0, 1);
-//             tmp.splice(back - 0, 1);
-//             area.value = tmp.join('');
-//         };
-
-//         if(event.target.innerHTML === 'Tab') {
-//             tmp.splice(back - 0, 1);
-//             area.value = tmp.join('');
-//         };
-
-//         if(event.target.innerHTML === 'Shift') {
-//             tmp.splice(back - 0, 1);
-//             area.value = tmp.join('');
-//         };
-
-//         if(event.target.innerHTML === 'Ctrl') {
-//             tmp.splice(back - 0, 1);
-//             area.value = tmp.join('');
-//         };
-
-//         if(event.target.innerHTML === 'Alt') {
-//             tmp.splice(back - 0, 1);
-//             area.value = tmp.join('');
-//         };
-
-//         if(event.target.innerHTML === 'Win') {
-//             tmp.splice(back - 0, 1);
-//             area.value = tmp.join('');
-//         };
-
-//         if(event.target.innerHTML === 'CapsLock') {
-//             tmp.splice(back - 0, 1);
-//             area.value = tmp.join('');
-
-//             document.querySelector('.key[data="CapsLock"]').onclick = showOn();
-
-//         };
-
-//         if(event.target.innerHTML === 'Alt' && 'Shift') {
-//             tmp.splice(back - 0, 1);
-//             area.value = tmp.join('');
-
-//             alert('helloYAH')
-//         };
-
-//         setTimeout(function () {
-//         document.querySelectorAll('#keyboard .key').forEach(function(element) {
-//             element.classList.remove('active');
-//         });
-//     }, 100);
-
-//     }
-
-// });
-
-// function showOn() {
-//     function init(){
-//         let out = '';
-//         for (let i = 0; i < code.length; i++) {
-//             if (i == 14 || i == 28 || i == 42 || i == 56) {
-//                 out = out + '<div class="clear"></div>';
-//             }
-
-//             out = out + '<div class="key" data="' + code[i] + '">' + (key2[i]) + '</div>'
-//         }
-
-//         document.querySelector('#keyboard').innerHTML = out;
-
-//     }
-//     init();
-
-//     document.querySelector('.key[data="Space"]').style.width = 440 + 'px';
-//     document.querySelector('.key[data="Backspace"]').style.width = 130 + 'px';
-//     document.querySelector('.key[data="Tab"]').style.width = 70 + 'px';
-//     document.querySelector('.key[data="Delete"]').style.width = 110 + 'px';
-//     document.querySelector('.key[data="CapsLock"]').style.width = 80 + 'px';
-//     document.querySelector('.key[data="Enter"]').style.width = 100 + 'px';
-//     document.querySelector('.key[data="ShiftLeft"]').style.width = 130 + 'px';
-
-//     document.querySelector('.key[data="ShiftLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Backquote"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Tab"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="CapsLock"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ControlLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="MetaLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="AltLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Backspace"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Delete"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Enter"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ShiftRight"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ArrowUp"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ArrowDown"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ArrowLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ArrowRight"]').style.backgroundColor = "#404040";
-
-//     function getCaretPos(obj) {
-//         obj.focus();
-//         if (obj.selectionStart) return obj.selectionStart;
-//         else if (document.selection) {
-//           var sel = document.selection.createRange();
-//           var clone = sel.duplicate();
-//           sel.collapse(true);
-//           clone.moveToElementText(obj);
-//           clone.setEndPoint('EndToEnd', sel);
-//           return clone.text.length;
-//         }
-//         return 0;
-//       }
-
-//       function setSelectionRange(input, selectionStart, selectionEnd) {
-//         if (input.setSelectionRange) {
-//           input.focus();
-//           input.setSelectionRange(selectionStart, selectionEnd);
-//         } else if (input.createTextRange) {
-//           var range = input.createTextRange();
-//           range.collapse(true);
-//           range.moveEnd('character', selectionEnd);
-//           range.moveStart('character', selectionStart);
-//           range.select();
-//         }
-//       }
-
-//     document.onkeydown = function(event) {
-//         setTimeout(function () {
-
-//             area.focus();
-//             document.querySelectorAll('#keyboard .key').forEach(function(element) {
-//                 element.classList.remove('active');
-//             });
-//         }, 100);
-
-//         document.querySelector('#keyboard .key[data="' + event.code + '"]').classList.add('active');
-//     }
-
-//     document.querySelectorAll('#keyboard .key').forEach(function(element) {
-//         element.onclick = function(event) {
-//             area.focus();
-
-//             let back = getCaretPos(area);
-//             let tmp = area.value.split('');
-
-//             tmp.splice(back, 0, event.target.innerHTML);
-//             area.value = tmp.join('');
-//             setSelectionRange(area, back + 1, back + 1);
-
-//             if(event.target.innerHTML === 'Backspace') {
-//                 tmp.splice(back - 1, 1);
-//                 tmp.splice(back - 1, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Enter') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//                 document.getElementById('area').value = area.value +'\r\n'+'';
-//             };
-
-//             if(event.target.innerHTML === 'Delete') {
-//                 tmp.splice(back - 0, 1);
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Tab') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Shift') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Ctrl') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Alt') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Win') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'CapsLock') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-
-//                 document.querySelector('.key[data="CapsLock"]').onclick = showOff();
-//             }
-
-//             setTimeout(function () {
-//             document.querySelectorAll('#keyboard .key').forEach(function(element) {
-//                 element.classList.remove('active');
-//             });
-//         }, 100);
-
-//         }
-
-//     });
-// }
-
-// function showOff() {
-//     function init(){
-//         let out = '';
-//         for (let i = 0; i < code.length; i++) {
-//             if (i == 14 || i == 28 || i == 42 || i == 56) {
-//                 out = out + '<div class="clear"></div>';
-//             }
-
-//             out = out + '<div class="key" data="' + code[i] + '">' + (key[i]) + '</div>'
-//         }
-
-//         document.querySelector('#keyboard').innerHTML = out;
-
-//     }
-//     init();
-
-//     document.querySelector('.key[data="Space"]').style.width = 440 + 'px';
-//     document.querySelector('.key[data="Backspace"]').style.width = 130 + 'px';
-//     document.querySelector('.key[data="Tab"]').style.width = 70 + 'px';
-//     document.querySelector('.key[data="Delete"]').style.width = 110 + 'px';
-//     document.querySelector('.key[data="CapsLock"]').style.width = 80 + 'px';
-//     document.querySelector('.key[data="Enter"]').style.width = 100 + 'px';
-//     document.querySelector('.key[data="ShiftLeft"]').style.width = 130 + 'px';
-
-//     document.querySelector('.key[data="ShiftLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Backquote"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Tab"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="CapsLock"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ControlLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="MetaLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="AltLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Backspace"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Delete"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="Enter"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ShiftRight"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ArrowUp"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ArrowDown"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ArrowLeft"]').style.backgroundColor = "#404040";
-//     document.querySelector('.key[data="ArrowRight"]').style.backgroundColor = "#404040";
-
-//     function getCaretPos(obj) {
-//         obj.focus();
-//         if (obj.selectionStart) return obj.selectionStart;
-//         else if (document.selection) {
-//           var sel = document.selection.createRange();
-//           var clone = sel.duplicate();
-//           sel.collapse(true);
-//           clone.moveToElementText(obj);
-//           clone.setEndPoint('EndToEnd', sel);
-//           return clone.text.length;
-//         }
-//         return 0;
-//       }
-
-//       function setSelectionRange(input, selectionStart, selectionEnd) {
-//         if (input.setSelectionRange) {
-//           input.focus();
-//           input.setSelectionRange(selectionStart, selectionEnd);
-//         } else if (input.createTextRange) {
-//           var range = input.createTextRange();
-//           range.collapse(true);
-//           range.moveEnd('character', selectionEnd);
-//           range.moveStart('character', selectionStart);
-//           range.select();
-//         }
-//       }
-
-//     document.onkeydown = function(event) {
-//         setTimeout(function () {
-
-//             area.focus();
-//             document.querySelectorAll('#keyboard .key').forEach(function(element) {
-//                 element.classList.remove('active');
-//             });
-//         }, 100);
-
-//         document.querySelector('#keyboard .key[data="' + event.code + '"]').classList.add('active');
-//     }
-
-//     document.querySelectorAll('#keyboard .key').forEach(function(element) {
-//         element.onclick = function(event) {
-//             area.focus();
-
-//             let back = getCaretPos(area);
-//             let tmp = area.value.split('');
-
-//             tmp.splice(back, 0, event.target.innerHTML);
-//             area.value = tmp.join('');
-//             setSelectionRange(area, back + 1, back + 1);
-
-//             if(event.target.innerHTML === 'Backspace') {
-//                 tmp.splice(back - 1, 1);
-//                 tmp.splice(back - 1, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Enter') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//                 document.getElementById('area').value = area.value +'\r\n'+'';
-//             };
-
-//             if(event.target.innerHTML === 'Delete') {
-//                 tmp.splice(back - 0, 1);
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Tab') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Shift') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Ctrl') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Alt') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'Win') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-//             };
-
-//             if(event.target.innerHTML === 'CapsLock') {
-//                 tmp.splice(back - 0, 1);
-//                 area.value = tmp.join('');
-
-//                 document.querySelector('.key[data="CapsLock"]').onclick = showOn();
-
-//             }
-
-//             setTimeout(function () {
-//             document.querySelectorAll('#keyboard .key').forEach(function(element) {
-//                 element.classList.remove('active');
-//             });
-//         }, 100);
-
-//         }
-
-//     });
-// }
