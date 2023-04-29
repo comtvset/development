@@ -71,15 +71,12 @@ function init(e) {
       out = out + '<div class="clear"></div>';
     }
     if(code[i] === 'CapsLock') {
-      console.log('CapsLock')
         out = out + '<div class="key" id="myCapsLockId"'+'data-value="' + code[i] + '">' + e[i] + '</div>';
     }
     else if (code[i] === 'ShiftLeft') {
-      console.log('Shift')
       out = out + '<div class="key" id="myShiftLeft"'+'data-value="' + code[i] + '">' + e[i] + '</div>';
     }
     else if (code[i] === 'ShiftRight') {
-      console.log('Shift')
       out = out + '<div class="key" id="myShiftRight"'+'data-value="' + code[i] + '">' + e[i] + '</div>';
     }
     else {
@@ -160,10 +157,59 @@ myTextarea.addEventListener('blur', function () {
   myTextarea.focus();
 });
 
+
+
 function run() {
     const myElement = document.querySelectorAll('.key');
     runCapsLock();
     runShift();
+
+
+    code.forEach((key, index) => {
+      document.addEventListener('keydown', function(event) {
+        let activeKey = document.querySelectorAll('.key');
+
+        if (event.code === key) {
+          activeKey[index].classList.toggle('active');
+        }
+        if (event.code === 'ShiftLeft') {
+          console.log('Hello from keyboard LeftShift')
+        }
+      });
+
+      document.addEventListener('keyup', function(event) {
+        let activeKey = document.querySelectorAll('.key');
+
+        if (event.code === key) {
+          activeKey[index].classList.remove('active');
+        }
+      });
+    });
+
+
+    document.addEventListener('mousedown', function(event) {
+      const clickedElement = event.target;
+      if (clickedElement.classList.contains('key')) {
+        const dataValue = clickedElement.dataset.value;
+        const activeKey = document.querySelectorAll('.key');
+
+        code.forEach((key, index) => {
+          if (dataValue === key) {
+            activeKey[index].classList.add('active');
+          } else {
+            activeKey[index].classList.remove('active');
+          }
+        });
+      }
+    });
+
+    document.addEventListener('mouseup', function(event) {
+      const activeKey = document.querySelectorAll('.key');
+      activeKey.forEach(function (key) {
+        key.classList.remove('active');
+      });
+    });
+
 
 myElement.forEach(function (element) {
   element.addEventListener('click', function (event) {
@@ -174,11 +220,13 @@ myElement.forEach(function (element) {
     myTextarea.focus();
     let found = false;
 
+
     keysToChange.forEach((key, index) => {
       if (keysToChange[index] === dataValue) {
         found = true;
       }
     });
+
 
     if (!found) {
       myTextarea.value += event.target.innerText;
@@ -212,7 +260,6 @@ function runCapsLock() {
   let capsLock = document.getElementById('myCapsLockId')
     capsLock.addEventListener('click', function (event) {
         capsLock.classList.toggle('active');
-        console.log('HELLO FROM CAPSLOCK')
         if (isKey2Active) {
           init(keyUp);
         } else {
@@ -232,7 +279,6 @@ function runShift() {
   let isKey3Active = false;
 
   shiftRight.addEventListener('mousedown', function (event) {
-      console.log('HELLO FROM SHIFT')
       if (isKey2Active) {
         init(key2);
       } else {
@@ -253,7 +299,6 @@ function runShift() {
     });
 
     shiftLeft.addEventListener('mousedown', function (event) {
-      console.log('HELLO FROM SHIFT')
       if (isKey2Active) {
         init(key2);
       } else {
