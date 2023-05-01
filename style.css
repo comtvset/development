@@ -4,12 +4,16 @@
 }
 
 html {
-  background: #222222;
+  background: rgb(34, 34, 34);
 }
 
 h1 {
   font-family: Arial, Helvetica, sans-serif;
   color: azure;
+}
+
+textarea:focus {
+  outline: none;
 }
 
 .keyboard {
@@ -45,8 +49,7 @@ h1 {
 }
 
 .active {
-  -webkit-box-shadow: inset 0px 0px 22px 1px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0px 0px 22px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px 0px 22px 1px rgba(209, 12, 12, 0.726);
 }
 
 .window {
@@ -56,5 +59,4 @@ h1 {
 
 textarea {
   resize: none;
-}
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */

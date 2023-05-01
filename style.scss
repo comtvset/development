@@ -12,8 +12,8 @@ h1{
     color: azure;
 }
 
-.empty {
-
+textarea:focus {
+    outline: none;
 }
 
 .keyboard {
@@ -51,9 +51,14 @@ h1{
 .clear {
     clear: both;
 }
+// .active {
+//     -webkit-box-shadow: inset 0px 0px 22px 1px rgba(0,0,0,0.20);
+//     box-shadow: inset 0px 0px 22px 1px rgba(0,0,0,0.20);
+// }
 .active {
-    -webkit-box-shadow: inset 0px 0px 22px 1px rgba(0,0,0,0.20); 
-    box-shadow: inset 0px 0px 22px 1px rgba(0,0,0,0.20);    
+    -webkit-box-shadow: inset 0px 0px 22px 1px rgba(209, 12, 12, 0.726);
+    box-shadow: inset 0px 0px 22px 1px rgba(209, 12, 12, 0.726);
+    // background: rgb(95, 91, 91);
 }
 
 .window {
