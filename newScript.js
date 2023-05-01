@@ -359,3 +359,5 @@ function space() {
     myTextarea.value = myTextarea.value.substring(0, currentPosition) + ' ' + myTextarea.value.substring(currentPosition);
     myTextarea.setSelectionRange(currentPosition + 1, currentPosition + 1);
 }
+
+alert('Привет, проверь пожалуйста работу в четверг, если не сложно, т.к не удалось вложиться в дедлайн. Спасибо!')
