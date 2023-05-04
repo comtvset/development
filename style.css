@@ -19,7 +19,8 @@ textarea:focus {
 .keyboard {
   display: block;
   padding: 5px;
-  width: 1500px;
+  width: 100%;
+  margin-bottom: 50px;
 }
 
 .keyboard::after {
@@ -52,6 +53,10 @@ textarea:focus {
   box-shadow: inset 0px 0px 22px 1px rgba(209, 12, 12, 0.726);
 }
 
+.green {
+  background-color: green;
+}
+
 .window {
   width: 955px;
   height: 200px;
@@ -59,4 +64,10 @@ textarea:focus {
 
 textarea {
   resize: none;
+}
+
+.text {
+  font-family: Arial, Helvetica, sans-serif;
+  color: azure;
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */
