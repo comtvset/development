@@ -160,7 +160,6 @@ setKeysToChange(keysToChange);
 
 
 const myTextarea = document.getElementById('area');
-let elementCount = 0;
 let currentPosition = 0;
 
 myTextarea.focus();
@@ -209,7 +208,7 @@ function run() {
     }
   });
 
-  document.addEventListener('mouseup', function(event) {
+  document.addEventListener('mouseup', function() {
     const activeKey = document.querySelectorAll('.key');
     activeKey.forEach(function (key) {
       key.classList.remove('active');
@@ -222,7 +221,6 @@ function run() {
 
       const clickedElement = event.target;
       const dataValue = clickedElement.dataset.value;
-      elementCount = countElements();
       myTextarea.focus();
       let found = false;
 
@@ -298,7 +296,7 @@ let isKey3Active = true;
 
 function runCapsLock() {
   let capsLock = document.getElementById('myCapsLockId')
-    capsLock.addEventListener('click', function (event) {
+    capsLock.addEventListener('click', function () {
         if (isKey2Active) {
           if(!isRu) {
             init(keyUp);
@@ -321,7 +319,7 @@ function runShift() {
   let shiftRight = document.getElementById('myShiftRight');
   let isKey3Active = false;
 
-  shiftRight.addEventListener('mousedown', function (event) {
+  shiftRight.addEventListener('mousedown', function () {
     if (isKey2Active) {
       if(!isRu) {
         init(key2);
@@ -337,7 +335,7 @@ function runShift() {
     isKey3Active = !isKey3Active;
   });
 
-  shiftRight.addEventListener('mouseup', function (event) {
+  shiftRight.addEventListener('mouseup', function () {
     if (isKey3Active) {
       if(!isRu) {
         init(key2);
@@ -353,7 +351,7 @@ function runShift() {
     isKey3Active = false;
   });
 
-  shiftLeft.addEventListener('mousedown', function (event) {
+  shiftLeft.addEventListener('mousedown', function () {
     if (isKey2Active) {
       if(!isRu) {
         init(key2);
@@ -369,7 +367,7 @@ function runShift() {
     isKey3Active = !isKey3Active;
   });
 
-  shiftLeft.addEventListener('mouseup', function (event) {
+  shiftLeft.addEventListener('mouseup', function () {
     if (isKey3Active) {
       if(!isRu) {
         init(key2);
@@ -416,8 +414,8 @@ document.addEventListener('keydown', function (event) {
   }
 
     flag = !flag;
-    run();
     runFunc();
+    run();
     isKey2Active = !isKey2Active;
   }
 });
@@ -449,11 +447,6 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
-
-function countElements() {
-  const count = myTextarea.value.length + 1;
-  return count;
-}
 
 function backspace() {
     currentPosition = myTextarea.selectionStart;
