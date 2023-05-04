@@ -6,31 +6,37 @@ const code = [
   'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight',
 ];
 
-const key = [
+let key = [
   '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u',
   'i', 'o', 'p', '[', ']', 'Delete', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", '\\', 'Enter', 'Shift', '\\',
   'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'ᐃ', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', 'ᐊ', 'ᐁ', 'ᐅ',
 ];
 
-const keyUp = [
+let keyUp = [
   '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O',
   'P', '[', ']', 'Delete', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", '\\', 'Enter', 'Shift', '\\',
   'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'ᐃ', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', 'ᐊ', 'ᐁ', 'ᐅ',
 ];
 
-const key2 = [
+let key2 = [
   '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O',
   'P', '{', '}', 'Delete', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', "'", '|', 'Enter', 'Shift', '|', 'Z', 'X',
   'C', 'V', 'B', 'N', 'M', '<', '>', '?', 'ᐃ', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', 'ᐊ', 'ᐁ', 'ᐅ',
 ];
 
-const keyRu = [
+let keyRu = [
   'ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ',
   'з', 'х', 'ъ', 'Delete', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', '\\', 'Enter', 'Shift', '\\', 'я',
   'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'ᐃ', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', 'ᐊ', 'ᐁ', 'ᐅ',
 ];
 
-const key2Ru = [
+let keyUpRu = [
+  'Ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ',
+  'З', 'Х', 'Ъ', 'Delete', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', '\\', 'Enter', 'Shift', '\\', 'Я', 'Ч',
+  'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', 'ᐃ', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', 'ᐊ', 'ᐁ', 'ᐅ',
+];
+
+let key2Ru = [
   'Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ',
   'З', 'Х', 'Ъ', 'Delete', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', '|', 'Enter', 'Shift', '|', 'Я', 'Ч',
   'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', 'ᐃ', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', 'ᐊ', 'ᐁ', 'ᐅ',
@@ -127,9 +133,15 @@ const keysToChange = [
   'ControlRight',
 ];
 
+let flag = false;
+let isRu = false;
+
 function setKeysToChange(keysToChange) {
     keysToChange.forEach((element) => {
-    document.querySelector(`.key[data-value="${element}"]`).style.backgroundColor = '#404040';
+      if(flag) {
+        document.querySelector(`.key[data-value="CapsLock"]`).style.backgroundColor = '#D10C16';
+      }
+      document.querySelector(`.key[data-value="${element}"]`).style.backgroundColor = '#404040';
     });
 }
 setKeysToChange(keysToChange);
@@ -148,7 +160,6 @@ setKeysToChange(keysToChange);
 
 
 const myTextarea = document.getElementById('area');
-// const myElement = document.querySelectorAll('.key');
 let elementCount = 0;
 let currentPosition = 0;
 
@@ -160,115 +171,147 @@ myTextarea.addEventListener('blur', function () {
 
 
 function run() {
-    const myElement = document.querySelectorAll('.key');
-    runCapsLock();
-    runShift();
+  const myElement = document.querySelectorAll('.key');
+  runCapsLock();
+  runShift();
 
+  code.forEach((key, index) => {
+    document.addEventListener('keydown', function(event) {
+      let activeKey = document.querySelectorAll('.key');
 
-    code.forEach((key, index) => {
-      document.addEventListener('keydown', function(event) {
-        let activeKey = document.querySelectorAll('.key');
+      if (event.code === key) {
+        activeKey[index].classList.toggle('active');
+      }
+    });
 
-        if (event.code === key) {
-          activeKey[index].classList.toggle('active');
-        }
-        if (event.code === 'ShiftLeft') {
-          console.log('Hello from keyboard LeftShift')
-        }
-      });
+    document.addEventListener('keyup', function(event) {
+      let activeKey = document.querySelectorAll('.key');
 
-      document.addEventListener('keyup', function(event) {
-        let activeKey = document.querySelectorAll('.key');
+      if (event.code === key) {
+        activeKey[index].classList.remove('active');
+      }
+    });
+  });
 
-        if (event.code === key) {
+  document.addEventListener('mousedown', function(event) {
+    const clickedElement = event.target;
+    if (clickedElement.classList.contains('key')) {
+      const dataValue = clickedElement.dataset.value;
+      const activeKey = document.querySelectorAll('.key');
+
+      code.forEach((key, index) => {
+        if (dataValue === key) {
+          activeKey[index].classList.add('active');
+        } else {
           activeKey[index].classList.remove('active');
         }
       });
-    });
-
-
-    document.addEventListener('mousedown', function(event) {
-      const clickedElement = event.target;
-      if (clickedElement.classList.contains('key')) {
-        const dataValue = clickedElement.dataset.value;
-        const activeKey = document.querySelectorAll('.key');
-
-        code.forEach((key, index) => {
-          if (dataValue === key) {
-            activeKey[index].classList.add('active');
-          } else {
-            activeKey[index].classList.remove('active');
-          }
-        });
-      }
-    });
-
-    document.addEventListener('mouseup', function(event) {
-      const activeKey = document.querySelectorAll('.key');
-      activeKey.forEach(function (key) {
-        key.classList.remove('active');
-      });
-    });
-
-
-myElement.forEach(function (element) {
-  element.addEventListener('click', function (event) {
-
-    const clickedElement = event.target;
-    const dataValue = clickedElement.dataset.value;
-    elementCount = countElements();
-    myTextarea.focus();
-    let found = false;
-
-
-    keysToChange.forEach((key, index) => {
-      if (keysToChange[index] === dataValue) {
-        found = true;
-      }
-    });
-
-
-    if (!found) {
-      myTextarea.value += event.target.innerText;
-    }
-    if (dataValue === 'Backspace') {
-      backspace();
-    }
-    if (dataValue === 'Delete') {
-      del();
-    }
-    if (dataValue === 'Enter') {
-      enter();
-    }
-    if (dataValue === 'Tab') {
-        tab();
-    }
-    if (dataValue === 'Space') {
-        space();
     }
   });
-});
 
+  document.addEventListener('mouseup', function(event) {
+    const activeKey = document.querySelectorAll('.key');
+    activeKey.forEach(function (key) {
+      key.classList.remove('active');
+    });
+  });
+
+
+  myElement.forEach(function (element) {
+    element.addEventListener('click', function (event) {
+
+      const clickedElement = event.target;
+      const dataValue = clickedElement.dataset.value;
+      elementCount = countElements();
+      myTextarea.focus();
+      let found = false;
+
+
+      keysToChange.forEach((key, index) => {
+        if (keysToChange[index] === dataValue) {
+          found = true;
+        }
+      });
+
+
+      if (!found) {
+        myTextarea.value += event.target.innerText;
+      }
+      if (dataValue === 'Backspace') {
+        backspace();
+      }
+      if (dataValue === 'Delete') {
+        del();
+      }
+      if (dataValue === 'Enter') {
+        enter();
+      }
+      if (dataValue === 'Tab') {
+          tab();
+      }
+      if (dataValue === 'Space') {
+          space();
+      }
+      if (dataValue === 'ArrowUp') {
+        event.preventDefault();
+        let caretPosition = myTextarea.selectionStart;
+        let lines = myTextarea.value.split('\n');
+        let currentLineIndex = myTextarea.value.substr(0, caretPosition).split('\n').length - 1;
+        if (currentLineIndex > 0) {
+          let previousLineLength = lines[currentLineIndex - 1].length;
+          let previousLinePosition = myTextarea.value.substr(0, caretPosition - previousLineLength - 1).length;
+          myTextarea.setSelectionRange(previousLinePosition, previousLinePosition);
+        }
+      }
+      if (dataValue === 'ArrowDown') {
+        event.preventDefault();
+        let caretPosition = myTextarea.selectionStart;
+        let lines = myTextarea.value.split('\n');
+        let currentLineIndex = myTextarea.value.substr(0, caretPosition).split('\n').length - 1;
+        if (currentLineIndex < lines.length - 1) {
+          let nextLineLength = lines[currentLineIndex + 1].length;
+          let nextLinePosition = myTextarea.value.substr(0, caretPosition + nextLineLength + 1).length;
+          myTextarea.setSelectionRange(nextLinePosition, nextLinePosition);
+        }
+      }
+      if (dataValue === 'ArrowLeft') {
+        event.preventDefault();
+        let caretPosition = myTextarea.selectionStart;
+        myTextarea.setSelectionRange(caretPosition - 1, caretPosition - 1);
+      }
+      if (dataValue === 'ArrowRight') {
+        event.preventDefault();
+        let caretPosition = myTextarea.selectionStart;
+        myTextarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
+      }
+    });
+  });
 }
-run()
+
+function runFunc() {
+  setKeyWidths(keyWidths);
+  setKeysToChange(keysToChange);
+}
 
 let isKey2Active = true;
 let isKey3Active = true;
 
 function runCapsLock() {
-
   let capsLock = document.getElementById('myCapsLockId')
     capsLock.addEventListener('click', function (event) {
-        capsLock.classList.toggle('active');
         if (isKey2Active) {
-          init(keyUp);
-        } else {
+          if(!isRu) {
+            init(keyUp);
+          } else {init(keyUpRu)}
+      } else {
+        if(!isRu) {
           init(key);
-        }
-        setKeyWidths(keyWidths);
-        setKeysToChange(keysToChange);
-        run();
+        } else {init(keyRu)}
+      }
 
+        flag = !flag;
+        runFunc();
+        run();
         isKey2Active = !isKey2Active;
     })
 }
@@ -279,45 +322,132 @@ function runShift() {
   let isKey3Active = false;
 
   shiftRight.addEventListener('mousedown', function (event) {
-      if (isKey2Active) {
+    if (isKey2Active) {
+      if(!isRu) {
         init(key2);
-      } else {
-        init(key);
-      }
-      setKeyWidths(keyWidths);
-      setKeysToChange(keysToChange);
-      run();
-      isKey3Active = !isKey3Active;
-    });
+      } else {init(key2Ru)}
+  } else {
+    if(!isRu) {
+      init(key);
+    } else {init(keyRu)}
+  }
 
-    shiftRight.addEventListener('mouseup', function (event) {
-      init(isKey3Active ? key2 : key);
-      setKeyWidths(keyWidths);
-      setKeysToChange(keysToChange);
-      run();
-      isKey3Active = false;
-    });
+    runFunc();
+    run();
+    isKey3Active = !isKey3Active;
+  });
 
-    shiftLeft.addEventListener('mousedown', function (event) {
-      if (isKey2Active) {
+  shiftRight.addEventListener('mouseup', function (event) {
+    if (isKey3Active) {
+      if(!isRu) {
         init(key2);
-      } else {
+      } else {init(key2Ru)}
+    } else {
+      if(!isRu) {
         init(key);
-      }
-      setKeyWidths(keyWidths);
-      setKeysToChange(keysToChange);
-      run();
-      isKey3Active = !isKey3Active;
-    });
+      } else {init(keyRu)}
+    }
 
-    shiftLeft.addEventListener('mouseup', function (event) {
-      init(isKey3Active ? key2 : key);
-      setKeyWidths(keyWidths);
-      setKeysToChange(keysToChange);
-      run();
-      isKey3Active = false;
-    });
+    runFunc();
+    run();
+    isKey3Active = false;
+  });
+
+  shiftLeft.addEventListener('mousedown', function (event) {
+    if (isKey2Active) {
+      if(!isRu) {
+        init(key2);
+      } else {init(key2Ru)}
+  } else {
+    if(!isRu) {
+      init(key);
+    } else {init(keyRu)}
+  }
+
+    runFunc();
+    run();
+    isKey3Active = !isKey3Active;
+  });
+
+  shiftLeft.addEventListener('mouseup', function (event) {
+    if (isKey3Active) {
+      if(!isRu) {
+        init(key2);
+      } else {init(key2Ru)}
+    } else {
+      if(!isRu) {
+        init(key);
+      } else {init(keyRu)}
+    }
+
+    runFunc();
+    run();
+    isKey3Active = false;
+  });
 }
+
+
+document.addEventListener('keydown', function (event) {
+  if (event.shiftKey) {
+    if (isKey2Active) {
+      isKey3Active = true;
+      if(!isRu) {
+        init(key2);
+      } else {init(key2Ru)}
+  } else {
+    if(!isRu) {
+      init(key);
+    } else {init(keyRu)}
+  }
+
+    runFunc();
+    run();
+    isKey3Active = !isKey3Active;
+  }
+  if (event.code === 'CapsLock') {
+    if (isKey2Active) {
+      if(!isRu) {
+        init(keyUp);
+      } else {init(keyUpRu)}
+  } else {
+    if(!isRu) {
+      init(key);
+    } else {init(keyRu)}
+  }
+
+    flag = !flag;
+    run();
+    runFunc();
+    isKey2Active = !isKey2Active;
+  }
+});
+
+document.addEventListener('keyup', function(event) {
+  if (event.key === 'Shift') {
+    if (isKey3Active) {
+      if(!isRu) {
+        init(key2);
+      } else {init(key2Ru)}
+    } else {
+      if(!isRu) {
+        init(key);
+      } else {init(keyRu)}
+    }
+
+    runFunc();
+    run();
+    isKey3Active = false;
+  }
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.shiftKey && event.altKey) {
+    isRu = !isRu;
+    init(keyRu);
+    runFunc();
+    run();
+  }
+});
 
 
 function countElements() {
@@ -360,4 +490,14 @@ function space() {
     myTextarea.setSelectionRange(currentPosition + 1, currentPosition + 1);
 }
 
-alert('Привет, проверь пожалуйста работу в четверг, если не сложно, т.к не удалось вложиться в дедлайн. Спасибо!')
+run()
+
+const div1 = document.createElement('div');
+div1.textContent = 'Клавиатура создана в операционной системе Windows';
+div1.classList.add('text');
+document.body.appendChild(div1);
+
+const div2 = document.createElement('div');
+div2.textContent = 'Для переключения языка комбинация: левыe Shift + Alt';
+div2.classList.add('text');
+document.body.appendChild(div2);
